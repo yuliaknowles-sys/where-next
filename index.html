@@ -1,0 +1,649 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Curated Travel Experiences</title>
+<meta name="description" content="Travel experiences for private principals, by Yulia Knowles, Executive Personal Assistant.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Josefin+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --page:#F9F6F0;
+  --paper:#FFFFFF;
+  --land:#FFFDF8;
+  --ocean:#D6E3EC;
+  --ocean-line:#C2D3DF;
+  --navy:#1F2E4A;
+  --riviera:#4F7397;
+  --gold:#B89A5E;
+  --gold-soft:#D9C59A;
+  --star:#C9A24E;
+  --ink:#2A2F3A;
+  --muted:#6E7380;
+  --line:#E7E0D3;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--page);color:var(--ink);font-family:'Cormorant Garamond',Georgia,serif;font-weight:500;font-size:19px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+button{font:inherit;color:inherit}
+.caps{font-family:'Josefin Sans',sans-serif;font-weight:400;text-transform:uppercase;letter-spacing:.26em;font-size:11px}
+
+/* HEADER */
+.topbar{max-width:1240px;margin:0 auto;padding:26px 24px 0;display:flex;justify-content:space-between;align-items:flex-start}
+.topbar .caps{color:var(--navy);display:inline-block;padding-bottom:10px;position:relative;text-decoration:none}
+.topbar .caps::after{content:"";position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:28px;height:1px;background:var(--gold)}
+.masthead{text-align:center;padding:0 16px;margin-top:-18px}
+.sun{width:96px;height:42px;display:block;margin:0 auto 8px}
+.masthead h1{font-family:'Cormorant Garamond',Georgia,serif;font-weight:500;color:var(--navy);font-size:clamp(26px,4vw,42px);letter-spacing:.18em;line-height:1.2}
+.masthead .by{color:var(--riviera);margin-top:10px}
+.headline{font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:400;color:var(--navy);font-size:clamp(34px,5vw,58px);line-height:1.12;margin:18px 0 28px}
+
+/* FRAME + MAP */
+.stage{max-width:1240px;margin:0 auto;padding:0 24px}
+.frame{position:relative;border:1px solid var(--gold-soft);padding:8px;background:var(--page)}
+.frame-inner{border:1px solid var(--gold);padding:10px;position:relative}
+.corner{position:absolute;width:16px;height:16px;background:var(--page);border:1px solid var(--gold-soft);z-index:2}
+.corner.tl{top:-1px;left:-1px;border-width:0 1px 1px 0}
+.corner.tr{top:-1px;right:-1px;border-width:0 0 1px 1px}
+.corner.bl{bottom:-1px;left:-1px;border-width:1px 1px 0 0}
+.corner.br{bottom:-1px;right:-1px;border-width:1px 0 0 1px}
+.map-box{position:relative;background:var(--ocean);overflow:hidden}
+#worldmap{display:block;width:100%;height:auto}
+.sphere{fill:var(--ocean)}
+.grat{fill:none;stroke:rgba(255,255,255,.45);stroke-width:.5}
+.land{fill:var(--land);stroke:var(--ocean-line);stroke-width:.6}
+.mark{cursor:pointer;transition:opacity .25s}
+.mark.dim{opacity:.15;pointer-events:none}
+.mark .star{fill:var(--star);stroke:var(--paper);stroke-width:1;transition:transform .25s ease,fill .25s;transform-box:fill-box;transform-origin:center}
+.mark .glow{fill:rgba(201,162,78,.45);opacity:0;transition:opacity .3s;filter:url(#blur)}
+.mark:hover .star,.mark.active .star{transform:scale(1.45);fill:#B8892E}
+.mark:hover .glow,.mark.active .glow{opacity:1}
+.mark.active .glow{animation:glow 2.4s ease-in-out infinite}
+@keyframes glow{0%,100%{opacity:.5}50%{opacity:1}}
+.mark .hit{fill:transparent}
+.mark .lead{stroke:rgba(31,46,74,.45);stroke-width:.8;fill:none}
+.mark text{font-family:'Josefin Sans',sans-serif;font-size:10.5px;letter-spacing:.18em;fill:var(--navy);paint-order:stroke;stroke:var(--ocean);stroke-width:3.2px;stroke-linejoin:round;transition:fill .25s}
+.mark.onland text{stroke:var(--land)}
+.mark:hover text,.mark.active text{fill:#9A7631}
+.cardline{stroke:var(--gold);stroke-width:.9;fill:none;opacity:.8}
+.map-hint{display:none;color:var(--navy)}
+
+/* FEATURED CARD ON MAP */
+.feature{position:absolute;right:3%;bottom:4%;width:40%;max-width:520px;display:flex;background:var(--paper);border:1px solid var(--gold-soft);padding:7px;box-shadow:0 12px 30px rgba(31,46,74,.16);z-index:3;transition:opacity .35s}
+.feature.fade{opacity:0}
+.feature .ph{flex:0 0 40%;aspect-ratio:4/3;align-self:center;background:#E6ECF1 center/cover no-repeat}
+.feature .txt{flex:1;padding:10px 14px 8px;display:flex;flex-direction:column;min-width:0}
+.feature .country{color:var(--riviera);font-size:10px}
+.feature h3{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:clamp(18px,1.7vw,24px);line-height:1.15;color:var(--navy);margin-top:6px}
+.feature .rule{width:30px;height:1px;background:var(--gold);margin:8px 0 6px}
+.feature .mood{font-size:16px;font-style:italic;color:var(--muted);margin-bottom:8px}
+.feature .foot{margin-top:auto;display:flex;align-items:flex-end;justify-content:space-between;gap:10px}
+.feature .go{flex:0 0 auto;background:none;border:none;border-bottom:1px solid var(--gold);padding:0 0 4px;color:var(--navy);cursor:pointer}
+.feature .tip{color:var(--muted);font-size:8.5px;letter-spacing:.18em;text-align:right;line-height:1.5}
+
+/* BELOW MAP */
+.tagline{text-align:center;color:var(--navy);font-size:clamp(20px,2.2vw,26px);letter-spacing:.1em;margin:36px 16px 0}
+.mini-rule{width:34px;height:1px;background:var(--gold);margin:16px auto}
+.filters{max-width:1000px;margin:26px auto 0;padding:0 16px;display:grid;gap:14px;justify-items:center}
+.filter-row{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.chip{font-family:'Josefin Sans',sans-serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;background:var(--paper);border:1px solid var(--line);color:var(--navy);padding:9px 14px 7px;cursor:pointer;transition:all .2s}
+.chip:hover{border-color:var(--gold)}
+.chip.active{background:var(--navy);border-color:var(--navy);color:#fff}
+.count{font-style:italic;color:var(--muted);font-size:17px}
+
+/* COLLECTION */
+.section-title{text-align:center;margin:60px 16px 26px}
+.section-title h2{font-family:'Cormorant Garamond',Georgia,serif;font-weight:500;font-size:clamp(22px,3vw,30px);letter-spacing:.2em;color:var(--navy)}
+.grid{max-width:1240px;margin:0 auto;padding:0 24px 40px;display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px}
+.card{background:var(--paper);border:1px solid var(--line);padding:8px;cursor:pointer;text-align:left;display:flex;flex-direction:column;transition:border-color .2s,box-shadow .2s,transform .2s}
+.card:hover{border-color:var(--gold-soft);box-shadow:0 12px 30px rgba(31,46,74,.08);transform:translateY(-2px)}
+.card.hidden{display:none}
+.card .ph{aspect-ratio:3/2;background:#E6ECF1 center/cover no-repeat}
+.card .body{padding:18px 16px 14px;display:flex;flex-direction:column;flex:1}
+.card .country{color:var(--riviera)}
+.card h3{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:25px;line-height:1.18;color:var(--navy);margin:8px 0 8px}
+.card p{font-size:18px;color:#3E4452;flex:1}
+.card .go{margin-top:14px;color:var(--navy);border-bottom:1px solid var(--gold);align-self:flex-start;padding-bottom:4px}
+.empty{grid-column:1/-1;text-align:center;font-style:italic;color:var(--muted);padding:24px 0;display:none}
+
+/* MODAL */
+.overlay{position:fixed;inset:0;background:rgba(31,46,74,.45);display:none;align-items:center;justify-content:center;padding:16px;z-index:50}
+.overlay.open{display:flex}
+.modal{background:var(--page);max-width:700px;width:100%;max-height:92vh;overflow-y:auto;border:1px solid var(--gold-soft);position:relative}
+.modal .hero{aspect-ratio:16/8;background:#E6ECF1 center/cover no-repeat;position:relative}
+.modal .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(20,30,50,.7),rgba(20,30,50,0) 60%)}
+.modal .hero .ttl{position:absolute;left:28px;right:28px;bottom:20px;color:#fff;z-index:1}
+.modal .hero .ttl .caps{color:#F1E6CC}
+.modal .hero h3{font-family:'Cormorant Garamond',Georgia,serif;font-weight:500;font-size:clamp(28px,4.4vw,40px);line-height:1.1;margin-top:6px}
+.close{position:absolute;top:12px;right:14px;z-index:2;width:38px;height:38px;border:1px solid rgba(255,255,255,.7);background:rgba(20,30,50,.35);color:#fff;font-size:22px;line-height:1;cursor:pointer}
+.modal-body{padding:26px 28px 30px}
+.lead{font-size:20px;margin-bottom:20px}
+.facts{border-top:1px solid var(--line)}
+.fact{display:grid;grid-template-columns:150px 1fr;gap:16px;padding:13px 0;border-bottom:1px solid var(--line)}
+.fact .caps{color:var(--riviera);padding-top:5px}
+.fact div:last-child{font-size:18px}
+.insider{margin-top:22px;background:var(--paper);border-left:2px solid var(--gold);padding:16px 20px}
+.insider .caps{color:#9A7631}
+.insider p{font-style:italic;font-size:19px;margin-top:6px}
+
+footer{text-align:center;padding:40px 16px 46px;color:var(--muted)}
+footer .sig{font-family:'Cormorant Garamond',Georgia,serif;font-weight:500;font-size:22px;letter-spacing:.2em;color:var(--navy)}
+footer .caps{display:block;margin-top:8px;color:var(--riviera)}
+footer p{font-size:16px;font-style:italic;max-width:640px;margin:16px auto 0}
+
+@media (max-width:760px){
+  .topbar{padding:18px 16px 0}
+  .masthead{margin-top:14px}
+  .stage{padding:0 12px}
+  .grid{padding:0 16px 30px;grid-template-columns:1fr}
+  .mark text,.mark .lead,.cardline{display:none}
+  .map-hint{position:static;display:block;text-align:center;padding:12px 0 6px;font-size:9px}
+  .feature{position:relative;right:auto;bottom:auto;width:100%;max-width:none;margin-top:12px;box-shadow:none}
+  .feature .ph{flex-basis:44%}
+  .feature .tip{display:none}
+  .fact{grid-template-columns:1fr;gap:4px}
+  .modal-body{padding:22px 20px 26px}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="caps">Portfolio Project</span>
+  <a class="caps" href="https://yuliaknowles.wixsite.com/yulia-knowles" target="_blank" rel="noopener">Back to my site &#8599;</a>
+</div>
+
+<header class="masthead">
+  <svg class="sun" viewBox="0 0 96 42" aria-hidden="true">
+    <g stroke="#B89A5E" stroke-width="1" fill="none" stroke-linecap="round">
+      <path d="M30 41 A18 18 0 0 1 66 41"/>
+      <path d="M48 20 L48 1"/><path d="M41 21 L36 3"/><path d="M55 21 L60 3"/>
+      <path d="M35 25 L24 9"/><path d="M61 25 L72 9"/><path d="M31 30 L14 18"/>
+      <path d="M65 30 L82 18"/><path d="M29 36 L6 30"/><path d="M67 36 L90 30"/>
+      <path d="M2 41 L94 41"/>
+    </g>
+  </svg>
+  <h1>CURATED TRAVEL EXPERIENCES</h1>
+  <div class="caps by">By Yulia Knowles</div>
+  <div class="headline">Experiences worth planning for.</div>
+</header>
+
+<section class="stage" aria-label="Interactive map">
+  <div class="frame">
+    <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+    <div class="frame-inner">
+      <div class="map-box" id="mapBox">
+        <svg id="worldmap" role="img" aria-label="World map of travel experiences"></svg>
+        <div class="feature" id="feature">
+          <div class="ph" id="fPh"></div>
+          <div class="txt">
+            <div class="caps country" id="fCountry"></div>
+            <h3 id="fTitle"></h3>
+            <div class="rule"></div>
+            <div class="mood" id="fMood"></div>
+            <div class="foot"><button class="caps go" id="fGo">Discover &#8599;</button><span class="caps tip">Hover a star<br>to discover</span></div>
+          </div>
+        </div>
+        <div class="caps map-hint">Tap a star to explore</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<p class="tagline">Private access. Rare reservations. Every detail handled.</p>
+<div class="mini-rule"></div>
+
+<section class="filters" aria-label="Filters">
+  <div class="filter-row" id="typeFilters"></div>
+  <div class="filter-row" id="seasonFilters"></div>
+  <div class="count" id="count"></div>
+</section>
+
+<div class="section-title"><h2>THE COLLECTION</h2></div>
+<main class="grid" id="grid">
+  <div class="empty" id="empty">No experiences match this combination. Try another season.</div>
+</main>
+
+<div class="overlay" id="overlay" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+    <button class="close" id="close" aria-label="Close">&times;</button>
+    <div class="hero" id="mHero">
+      <div class="ttl">
+        <div class="caps" id="mPlace"></div>
+        <h3 id="mTitle"></h3>
+      </div>
+    </div>
+    <div class="modal-body">
+      <p class="lead" id="mLead"></p>
+      <div class="facts" id="mFacts"></div>
+      <div class="insider">
+        <div class="caps">Insider Note</div>
+        <p id="mInsider"></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="sig">YULIA KNOWLES</div>
+  <span class="caps">Executive Personal Assistant</span>
+  <p>A portfolio sample. Details reflect public information as of October 2026; access, schedules and policies change, so every element is confirmed with the provider before anything is booked. Photography from Unsplash. Map data from Natural Earth.</p>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+<script>
+const IMG = id => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=900&q=70`;
+const TYPES = ["Romance","Family","Adventure","Culture & Gastronomy","Wilderness"];
+const SEASONS = ["Winter","Spring","Summer","Autumn"];
+
+const EXPERIENCES = [
+  {
+    title:"A Truffle Lunch, Arriving by Helicopter",
+    country:"France", label:["LORGUES","FRANCE"], dx:-58, dy:16, anchor:"end",
+    mood:"Indulgence · Tradition", place:"Lorgues, Provence · France",
+    lat:43.493, lng:6.361, photo:"1600759487717-62bbb608106e",
+    types:["Romance","Culture & Gastronomy"], seasons:["Winter","Spring","Summer","Autumn"],
+    summary:"A short helicopter hop from the Riviera to a family-run Provençal farmhouse where nearly every course is built around the truffle.",
+    lead:"Chez Bruno holds one Michelin star and serves a single truffle tasting menu that changes with the season. The house is run by two brothers, Benjamin in the kitchen and Samuel in the dining room, continuing their father's tradition.",
+    facts:[
+      ["Getting there","Helicopter from Cannes (about 15 minutes) or Monaco (about 25 minutes), with landing arranged through the operator."],
+      ["Best timing","Open year-round. Winter is the time for black truffles."],
+      ["Reservations","The restaurant takes bookings directly; confirm the table before the flight is held."],
+      ["Where to stay","Hôtel du Cap-Eden-Roc, Antibes"]
+    ],
+    insider:"This is a long, unhurried lunch. I would build a generous buffer into the return flight rather than schedule anything tight that afternoon."
+  },
+  {
+    title:"Glacier Express, Excellence Class",
+    country:"Switzerland", label:["ST. MORITZ","SWITZERLAND"], dx:54, dy:-28, anchor:"start", onland:true,
+    mood:"Grandeur · Ease", place:"St. Moritz to Zermatt · Switzerland",
+    lat:46.498, lng:9.838, photo:"1518625081961-b7fa235a38af",
+    types:["Romance","Culture & Gastronomy"], seasons:["Winter","Spring","Summer"],
+    summary:"Eight hours across the Alps in the most exclusive carriage of the train, from St. Moritz to car-free Zermatt beneath the Matterhorn.",
+    lead:"The route crosses 291 bridges and passes through 91 tunnels. Excellence Class guests have guaranteed window seats, a private bar and a concierge, with a five-course regional menu and wine pairings served along the way.",
+    facts:[
+      ["The journey","About eight hours, St. Moritz to Zermatt or the reverse."],
+      ["Booking","Excellence Class is sold only for the full route, never for a segment, and requires a first-class ticket plus the Excellence supplement."],
+      ["Before","Badrutt's Palace, St. Moritz"],
+      ["After","Zermatt is car-free; hotel transfers meet the train by electric shuttle."]
+    ],
+    insider:"The concierge handles check-in and luggage at the station. I would send main luggage ahead so the principal steps on board with only what they need for the day."
+  },
+  {
+    title:"A Private Arctic Estate for the Family",
+    country:"Finland", label:["ROVANIEMI","FINLAND"], dx:50, dy:-14, anchor:"start", onland:true,
+    mood:"Wonder · Togetherness", place:"Rovaniemi, Lapland · Finland",
+    lat:66.503, lng:25.729, photo:"1528155124528-06c125d81e89",
+    types:["Family","Wilderness"], seasons:["Winter","Autumn"],
+    summary:"An exclusive-use wilderness lodge whose exact location is kept private, reached the storybook way: overnight on the Santa Claus Express.",
+    lead:"Octola Private Wilderness is available only for exclusive-use stays and has hosted royals and film stars. Private chefs, wilderness guides and reindeer are part of the stay, and Santa Claus Village in Rovaniemi is a short drive away.",
+    facts:[
+      ["Getting there","Overnight sleeper from Helsinki on the Santa Claus Express, waking above the Arctic Circle in Rovaniemi. The lodge is about 20 minutes from Rovaniemi airport and has a private helipad."],
+      ["Best timing","September to March for the northern lights; December for the full Santa experience."],
+      ["Booking","Whole-estate buyout or a single wing; December fills first."]
+    ],
+    insider:"The train is comfortable, not a luxury train. Its value is the magic for the children, so I would reserve the upper-deck cabins for the ride north and arrange a private flight home."
+  },
+  {
+    title:"Unlocking the Sistine Chapel at Dawn",
+    country:"Vatican City", label:["VATICAN","CITY"], dx:50, dy:30, anchor:"start", onland:true,
+    mood:"Awe · Privilege", place:"Vatican City · Rome",
+    lat:41.906, lng:12.454, photo:"1657566639305-c00caab4022d",
+    types:["Culture & Gastronomy"], seasons:["Winter","Spring","Summer","Autumn"],
+    summary:"Before the museums open, walk the empty galleries with the Vatican's Key Master as he turns on the lights and opens the Sistine Chapel.",
+    lead:"Guests accompany the Key Master as he unlocks the halls, galleries and the Sistine Chapel itself, hours before the public arrives, with an official Vatican guide alongside.",
+    facts:[
+      ["Format","Early-morning private access with the Key Master and an official guide."],
+      ["Dress code","Modest dress is required: no sleeveless tops, shorts or short skirts."],
+      ["Good to know","Photography is not permitted inside the Sistine Chapel."],
+      ["Where to stay","Hotel de Russie, Rome"]
+    ],
+    insider:"Book only the fully private version. The shared format can admit two groups at once, around forty people, which defeats the point."
+  },
+  {
+    title:"A Highland Castle on the River Spey",
+    country:"Scotland", label:["SPEYSIDE","SCOTLAND"], dx:-78, dy:2, anchor:"end",
+    mood:"Heritage · Calm", place:"Speyside · Scotland",
+    lat:57.616, lng:-3.099, photo:"1665516870021-4de1bb8e02aa",
+    types:["Family","Culture & Gastronomy"], seasons:["Spring","Summer","Autumn"],
+    summary:"Take over a fully staffed 15th-century family castle in whisky country, with private salmon beats on one of Scotland's great rivers.",
+    lead:"Gordon Castle is hired on an exclusive basis only, with its own butler and chef, and sleeps eighteen in the castle itself. The estate's beats on the lower Spey are among the most famous salmon waters in Britain.",
+    facts:[
+      ["Getting there","About 40 miles from Inverness Airport."],
+      ["The stay","Exclusive use of the castle, with estate cottages available for a larger party."],
+      ["Beyond fishing","Private distillery visits and tastings across Speyside."]
+    ],
+    insider:"I would book a ghillie even for guests who have never fished. A morning on the river with someone who knows every pool is the experience, whether or not a salmon cooperates."
+  },
+  {
+    title:"Seven Stars in Kyushu",
+    country:"Japan", label:["KYUSHU","JAPAN"], dx:50, dy:-4, anchor:"start",
+    mood:"Artistry · Rarity", place:"Kyushu · Japan",
+    lat:33.590, lng:130.420, photo:"1618415880228-b9fd00c1e555",
+    types:["Romance","Culture & Gastronomy"], seasons:["Winter","Spring","Summer","Autumn"],
+    summary:"Japan's most coveted train: seven cars, around twenty guests, and a waiting list so long that seats are allocated by lottery.",
+    lead:"The train departs from Hakata Station in Fukuoka. Its name refers to Kyushu's seven prefectures and its seven cars, and each journey carries just eight Suites and two Deluxe Suites.",
+    facts:[
+      ["Booking","Places are drawn by lottery, but a few specialist rail agencies secure allocations sold outside it."],
+      ["Season","Runs from April to August and from September to February. Late March into early April brings cherry blossom."],
+      ["Extend the trip","Continue to Aman Kyoto."]
+    ],
+    insider:"I would contact the specialist agencies the moment a principal shows interest. Their allocations are small and go quickly, and they remove the uncertainty of the lottery."
+  },
+  {
+    title:"Emperor Penguins from a Sky Pod",
+    country:"Antarctica", label:["QUEEN MAUD LAND","ANTARCTICA"], dx:-30, dy:-44, anchor:"end",
+    mood:"Awe · Solitude", place:"Queen Maud Land · Antarctica",
+    lat:-71.5, lng:8.5, photo:"1551415923-a2297c7fda79",
+    types:["Adventure","Wilderness"], seasons:["Winter","Autumn"],
+    summary:"A five-hour private flight from Cape Town to the interior of Antarctica, staying in one of six heated pods inspired by space exploration.",
+    lead:"White Desert's Echo camp sleeps just twelve guests and sits near a colony of emperor penguins. The company brings only around 250 guests to the continent each year.",
+    facts:[
+      ["Getting there","Private jet from Cape Town, landing on a blue-ice runway."],
+      ["Season","The Antarctic summer, roughly November to January."],
+      ["Before departure","A mandatory safety briefing is held in Cape Town."]
+    ],
+    insider:"Weather decides the flight, not the calendar. I would hold flexible nights in Cape Town on both ends and keep the onward schedule open."
+  },
+  {
+    title:"Marlon Brando's Private Atoll",
+    country:"French Polynesia", label:["TETIAROA","FRENCH POLYNESIA"], dx:10, dy:-38, anchor:"middle",
+    mood:"Escape · Stillness", place:"Tetiaroa · French Polynesia",
+    lat:-17.013, lng:-149.560, photo:"1692417045423-48f9ac5a57e8",
+    types:["Romance","Family"], seasons:["Spring","Summer","Autumn"],
+    summary:"Thirty-five villas, each with its own plunge pool and beach, on the atoll Marlon Brando bought after filming in Tahiti.",
+    lead:"The Brando sits on Tetiaroa, a ring of small islands around a lagoon north of Tahiti. The island is reached only by the resort's own aircraft or by charter helicopter.",
+    facts:[
+      ["Getting there","About 20 minutes on Air Tetiaroa from a private terminal at Tahiti's Faa'a airport."],
+      ["Length of stay","A minimum of three nights is recommended."],
+      ["Best timing","The drier months, roughly May to October."]
+    ],
+    insider:"A small detail principals appreciate: there are no mosquitoes on Tetiaroa."
+  },
+  {
+    title:"An Hour with the Mountain Gorillas",
+    country:"Rwanda", label:["VOLCANOES N.P.","RWANDA"], dx:62, dy:18, anchor:"start",
+    mood:"Connection · Humility", place:"Volcanoes National Park · Rwanda",
+    lat:-1.470, lng:29.530, photo:"1589442690840-1c2c880254ac",
+    types:["Adventure","Wilderness"], seasons:["Winter","Summer"],
+    summary:"A guided trek into the cloud forest to spend one quiet hour with a habituated gorilla family, then back to a lodge on the edge of the park.",
+    lead:"Singita Kwitonda Lodge has eight suites and the four-bedroom Kataza House, facing three volcanoes. Each day only a small number of permits are issued, for groups of eight per gorilla family.",
+    facts:[
+      ["Getting there","About two and a half hours by road from Kigali, or by helicopter."],
+      ["Permits","Not included in the lodge rate and limited daily; secure them months ahead."],
+      ["Age","Trekking starts at 15. Younger children are welcome at the lodge, with babysitting available."],
+      ["Best timing","The dry seasons, June to September and December to February."]
+    ],
+    insider:"I confirm permits before anything else in this itinerary. Without them, the rest of the trip has no centerpiece."
+  },
+  {
+    title:"The Hidden Valleys of Bhutan",
+    country:"Bhutan", label:["PARO","BHUTAN"], dx:24, dy:-40, anchor:"start", onland:true,
+    mood:"Serenity · Discovery", place:"Paro · Bhutan",
+    lat:27.403, lng:89.425, photo:"1729180253305-23990aee8705",
+    types:["Culture & Gastronomy","Wilderness"], seasons:["Spring","Autumn"],
+    summary:"A journey between Amankora's lodges across several valleys, with private guides, monasteries and almost no other travelers.",
+    lead:"Every arrival begins at Paro, one of the most demanding airports in the world, set in a deep valley ringed by high peaks.",
+    facts:[
+      ["Getting there","Paro operates in daylight and visual conditions only, and just a small number of specially certified pilots may land there."],
+      ["Private aircraft","Foreign aircraft must fly in with a certified pilot or navigator on board."],
+      ["Best timing","Spring (March to May) and autumn (September to November)."]
+    ],
+    insider:"A private jet arrival is possible but needs early coordination, and the landing must fall in daylight. I would plan the whole day backward from that slot."
+  },
+  {
+    title:"A Staffed Villa on Mustique",
+    country:"The Grenadines", label:["MUSTIQUE","GRENADINES"], dx:56, dy:22, anchor:"start",
+    mood:"Privacy · Ease", place:"Mustique · The Grenadines",
+    lat:12.880, lng:-61.190, photo:"1771945484043-3a17fbf57a4b",
+    types:["Romance","Family"], seasons:["Winter","Spring"],
+    summary:"A privately owned island of about one hundred villas, chosen for one thing above all: privacy. Close enough to Florida for a long weekend.",
+    lead:"Villas are rented through the Mustique Company. The island's short runway takes only small aircraft, so even the most experienced travelers make the final hop by turboprop.",
+    facts:[
+      ["Getting there","Private jet to Barbados or Canouan, then a short turboprop flight to Mustique."],
+      ["Good to know","The airstrip has no runway lights and closes before sunset."],
+      ["Best timing","December to April."]
+    ],
+    insider:"The jet's arrival time is set by the last turboprop hop, not the other way around. I would land in Barbados with time to spare before dusk."
+  },
+  {
+    title:"A Chalet Alone on a Glacier",
+    mood:"Silence · Grandeur",
+    country:"Alaska", label:["DENALI","ALASKA"], dx:-4, dy:46, anchor:"middle",
+    place:"Denali National Park · Alaska",
+    lat:62.95, lng:-150.75, photo:"1604180989431-aa4e1ab13847",
+    types:["Adventure","Wilderness","Romance"], seasons:["Winter"],
+    summary:"Five bedrooms on a rocky outcrop above the Ruth Glacier, reached only by helicopter, with Denali rising across the ice.",
+    lead:"Sheldon Chalet sits at about 6,000 feet on five acres of private land inside Denali National Park. It hosts no more than ten guests at a time, with an in-house chef, and there is no cell signal or wifi.",
+    facts:[
+      ["Getting there","By helicopter only."],
+      ["The stay","Five bedrooms, a maximum of ten guests, all meals prepared by the chalet's chef."],
+      ["On the ice","Guided glacier treks on the Ruth Glacier, a sauna, and aurora viewing in the dark months."],
+      ["Booking","Confirm open dates and whether the stay is exclusive or shared directly with the chalet."]
+    ],
+    insider:"There is no signal on the glacier. Before departure I would agree a check-in plan with the principal's office and route anything urgent through the chalet team."
+  },
+  {
+    title:"Beluga Summer at the Top of the World",
+    mood:"Wildness · Wonder",
+    country:"Canada", label:["SOMERSET ISLAND","NUNAVUT"], dx:-36, dy:42, anchor:"end", onland:true,
+    place:"Somerset Island, Nunavut · Canada",
+    lat:74.1, lng:-93.9, photo:"1690150421558-b0e78fde97cf",
+    types:["Adventure","Wilderness","Family"], seasons:["Summer"],
+    summary:"The most northerly fly-in lodge on earth, on the Northwest Passage beside one of the largest beluga nurseries in the Arctic.",
+    lead:"Arctic Watch Wilderness Lodge sits at 74° North, about 800 kilometers above the Arctic Circle, with sixteen private cabins and roughly one staff member for every one and a half guests.",
+    facts:[
+      ["Getting there","Fly-in only, by charter arranged with the lodge."],
+      ["Days here","Kayaking and paddle boarding among belugas, rafting, hiking, ATVs and visits to archaeological sites, under the midnight sun."],
+      ["Best timing","The short Arctic summer."]
+    ],
+    insider:"Flights this far north depend on weather. I would hold a buffer day at each end and keep the onward itinerary flexible."
+  },
+  {
+    title:"Machu Picchu, from the Only Hotel at Its Gates",
+    mood:"Wonder · History",
+    country:"Peru", label:["MACHU PICCHU","PERU"], dx:-52, dy:24, anchor:"end",
+    place:"Machu Picchu · Peru",
+    lat:-13.16, lng:-72.54, photo:"1539017691474-d280be4d3290",
+    types:["Culture & Gastronomy","Romance"], seasons:["Spring","Summer"],
+    summary:"Arrive on the Hiram Bingham train and sleep a three-minute walk from the citadel entrance, after the day visitors have gone.",
+    lead:"Belmond Sanctuary Lodge is the only hotel at the gates of Machu Picchu, with 31 rooms and suites. The Hiram Bingham train makes the journey from Cusco part of the experience.",
+    facts:[
+      ["Getting there","Hiram Bingham train from Cusco (about three and a half hours), then a short drive up from Aguas Calientes."],
+      ["The stay","31 rooms and suites, two restaurants and a bar, steps from the citadel."],
+      ["Best timing","The dry season, roughly May to September."]
+    ],
+    insider:"Entry to the citadel is by timed ticket and numbers are limited. I would secure entries and a private guide the moment dates are confirmed, before the hotel itself."
+  },
+  {
+    title:"A Private Guide for Every Villa",
+    mood:"Freedom · Wildness",
+    country:"Chile", label:["TORRES DEL PAINE","CHILE"], dx:-54, dy:2, anchor:"end",
+    place:"Patagonia · Chile",
+    lat:-51.0, lng:-72.9, photo:"1510939859912-0e7e5904c400",
+    types:["Adventure","Romance","Wilderness"], seasons:["Autumn","Winter","Spring"],
+    summary:"Villas on a private reserve facing the granite towers, each with its own guide and 4x4, so no day runs on a group schedule.",
+    lead:"Awasi Patagonia is a Relais & Châteaux lodge on a private reserve of about 15,000 acres. Every villa has a wood-burning stove, a private hot tub, and a dedicated guide and vehicle.",
+    facts:[
+      ["The stay","Each villa is assigned its own excursion guide and 4x4."],
+      ["Wildlife","Condors, foxes and, with patience, pumas."],
+      ["Best timing","The southern summer, roughly October to April."]
+    ],
+    insider:"With a private guide and vehicle, I can shape each day around how the principal feels that morning, early starts for wildlife or a slow lunch with the view."
+  }
+];
+
+
+/* ---------- MAP ---------- */
+const W = 1000, H = 520;
+const svg = d3.select("#worldmap").attr("viewBox", `0 0 ${W} ${H}`);
+svg.append("defs").html('<filter id="blur" x="-1" y="-1" width="3" height="3"><feGaussianBlur stdDeviation="3"/></filter>');
+const proj = d3.geoNaturalEarth1().fitExtent([[6,6],[W-6,H-6]], {type:"Sphere"});
+const path = d3.geoPath(proj);
+svg.append("path").datum({type:"Sphere"}).attr("class","sphere").attr("d", path);
+svg.append("path").datum(d3.geoGraticule10()).attr("class","grat").attr("d", path);
+const landLayer = svg.append("g");
+const cardLine = svg.append("polyline").attr("class","cardline");
+const markLayer = svg.append("g");
+
+d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/land-110m.json").then(topo => {
+  landLayer.append("path").datum(topojson.feature(topo, topo.objects.land)).attr("class","land").attr("d", path);
+}).catch(()=>{});
+
+/* four-point Art Deco star, centered on 0,0 */
+const STAR = "M0,-8 C0.9,-2.2 2.2,-0.9 8,0 C2.2,0.9 0.9,2.2 0,8 C-0.9,2.2 -2.2,0.9 -8,0 C-2.2,-0.9 -0.9,-2.2 0,-8Z";
+
+const marks = EXPERIENCES.map((e, i) => {
+  const [x, y] = proj([e.lng, e.lat]);
+  const g = markLayer.append("g").attr("class", e.onland ? "mark onland" : "mark")
+    .attr("tabindex", 0).attr("role", "button").attr("aria-label", e.title);
+  const lx = x + e.dx, ly = y + e.dy;
+  const tail = e.anchor === "end" ? lx + 4 : e.anchor === "start" ? lx - 4 : lx;
+  const tailY = e.anchor === "middle" ? ly - 18 : ly - 4;
+  g.append("polyline").attr("class","lead").attr("points", `${x},${y} ${tail},${tailY}`);
+  const t = g.append("text").attr("x", lx).attr("y", ly - 8).attr("text-anchor", e.anchor);
+  t.append("tspan").attr("x", lx).attr("dy", 0).text(e.label[0]);
+  t.append("tspan").attr("x", lx).attr("dy", 14).text(e.label[1]);
+  const sg = g.append("g").attr("class","sg").attr("transform", `translate(${x},${y})`);
+  sg.append("circle").attr("class","glow").attr("r", 12);
+  sg.append("path").attr("class","star").attr("d", STAR);
+  sg.append("circle").attr("class","hit").attr("r", 15);
+  g.on("mouseenter", () => { stopAuto(); feature(i); })
+   .on("click", () => { stopAuto(); feature(i); openModal(i); })
+   .on("keydown", ev => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); stopAuto(); feature(i); openModal(i); } });
+  return {g, sg, x, y};
+});
+
+/* larger stars and tap targets on small screens */
+function sizeMarks(){
+  const w = document.getElementById("worldmap").getBoundingClientRect().width || W;
+  const k = Math.max(1, Math.min(2.6, 700 / w));
+  marks.forEach(m => m.sg.attr("transform", `translate(${m.x},${m.y}) scale(${k})`));
+  drawCardLine();
+}
+
+/* ---------- FEATURED CARD ---------- */
+let current = -1, autoTimer = null;
+const fEl = document.getElementById("feature");
+function feature(i){
+  if (i === current) return;
+  current = i;
+  const e = EXPERIENCES[i];
+  fEl.classList.add("fade");
+  setTimeout(() => {
+    document.getElementById("fPh").style.backgroundImage = `url(${IMG(e.photo)})`;
+    document.getElementById("fCountry").textContent = e.country;
+    document.getElementById("fTitle").textContent = e.title;
+    document.getElementById("fMood").textContent = e.mood;
+    fEl.classList.remove("fade");
+    drawCardLine();
+  }, 180);
+  marks.forEach((m, j) => m.g.classed("active", j === i));
+  marks[i].g.raise();
+}
+function drawCardLine(){
+  const box = document.getElementById("worldmap").getBoundingClientRect();
+  const c = fEl.getBoundingClientRect();
+  if (window.innerWidth <= 760 || !box.width || current < 0) { cardLine.attr("points",""); return; }
+  const s = W / box.width;
+  const cx = (c.left - box.left) * s, cy = (c.top + c.height * 0.42 - box.top) * s;
+  const m = marks[current];
+  cardLine.attr("points", `${cx},${cy} ${m.x},${m.y}`);
+}
+function visibleIdx(){ return EXPERIENCES.map((e,i)=>i).filter(i => !marks[i].g.classed("dim")); }
+function startAuto(){
+  stopAuto();
+  autoTimer = setInterval(() => {
+    const v = visibleIdx(); if (!v.length) return;
+    const pos = v.indexOf(current);
+    feature(v[(pos + 1) % v.length]);
+  }, 5000);
+}
+function stopAuto(){ if (autoTimer) { clearInterval(autoTimer); autoTimer = null; } }
+fEl.addEventListener("mouseenter", stopAuto);
+document.getElementById("fGo").addEventListener("click", () => { stopAuto(); openModal(current); });
+
+/* ---------- FILTERS ---------- */
+let activeType = "All", activeSeason = "All";
+function makeChips(id, values, all, pick){
+  const row = document.getElementById(id);
+  [all, ...values].forEach(v => {
+    const b = document.createElement("button");
+    b.className = "chip" + (v === all ? " active" : "");
+    b.textContent = v;
+    b.addEventListener("click", () => {
+      row.querySelectorAll(".chip").forEach(c => c.classList.remove("active"));
+      b.classList.add("active");
+      pick(v === all ? "All" : v);
+      applyFilters();
+    });
+    row.appendChild(b);
+  });
+}
+makeChips("typeFilters", TYPES, "All experiences", v => activeType = v);
+makeChips("seasonFilters", SEASONS, "Any season", v => activeSeason = v);
+
+/* ---------- COLLECTION ---------- */
+const grid = document.getElementById("grid");
+EXPERIENCES.forEach((e, i) => {
+  const card = document.createElement("button");
+  card.className = "card";
+  card.innerHTML = `
+    <div class="ph" style="background-image:url(${IMG(e.photo)})" role="img" aria-label="${e.country}"></div>
+    <div class="body">
+      <div class="caps country">${e.place}</div>
+      <h3>${e.title}</h3>
+      <p>${e.summary}</p>
+      <span class="caps go">View the brief &#8599;</span>
+    </div>`;
+  card.addEventListener("click", () => { stopAuto(); feature(i); openModal(i); });
+  grid.appendChild(card);
+  e._card = card;
+});
+
+function applyFilters(){
+  let shown = 0;
+  EXPERIENCES.forEach((e, i) => {
+    const ok = (activeType === "All" || e.types.includes(activeType)) &&
+               (activeSeason === "All" || e.seasons.includes(activeSeason));
+    e._card.classList.toggle("hidden", !ok);
+    marks[i].g.classed("dim", !ok);
+    if (ok) shown++;
+  });
+  document.getElementById("empty").style.display = shown ? "none" : "block";
+  document.getElementById("count").textContent = shown === EXPERIENCES.length
+    ? `${shown} experiences` : `Showing ${shown} of ${EXPERIENCES.length} experiences`;
+  const v = visibleIdx();
+  if (v.length && !v.includes(current)) feature(v[0]);
+}
+
+/* ---------- MODAL ---------- */
+const overlay = document.getElementById("overlay");
+function openModal(i){
+  const e = EXPERIENCES[i];
+  document.getElementById("mHero").style.backgroundImage = `url(${IMG(e.photo)})`;
+  document.getElementById("mPlace").textContent = e.place;
+  document.getElementById("mTitle").textContent = e.title;
+  document.getElementById("mLead").textContent = e.lead;
+  document.getElementById("mFacts").innerHTML = e.facts.map(f => `<div class="fact"><div class="caps">${f[0]}</div><div>${f[1]}</div></div>`).join("");
+  document.getElementById("mInsider").textContent = e.insider;
+  overlay.classList.add("open"); overlay.setAttribute("aria-hidden","false");
+  document.getElementById("close").focus();
+}
+function closeModal(){ overlay.classList.remove("open"); overlay.setAttribute("aria-hidden","true"); }
+document.getElementById("close").addEventListener("click", closeModal);
+overlay.addEventListener("click", ev => { if (ev.target === overlay) closeModal(); });
+document.addEventListener("keydown", ev => { if (ev.key === "Escape") closeModal(); });
+
+/* ---------- START ---------- */
+applyFilters();
+feature(0);
+sizeMarks();
+startAuto();
+window.addEventListener("resize", sizeMarks);
+</script>
+</body>
+</html>
