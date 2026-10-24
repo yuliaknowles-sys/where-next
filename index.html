@@ -56,13 +56,14 @@ button{font:inherit;color:inherit}
 .land{fill:var(--land);stroke:var(--ocean-line);stroke-width:.6}
 .mark{cursor:pointer;transition:opacity .25s}
 .mark.dim{opacity:.15;pointer-events:none}
-.mark .star{fill:var(--star);stroke:var(--paper);stroke-width:1;transition:transform .25s ease,fill .25s;transform-box:fill-box;transform-origin:center}
-.mark .glow{fill:rgba(201,162,78,.45);opacity:0;transition:opacity .3s;filter:url(#blur)}
+.mark .star{fill:#BD8B2A;stroke:rgba(31,46,74,.65);stroke-width:.9;transition:transform .25s ease,fill .25s;transform-box:fill-box;transform-origin:center}
+.mark .glow{fill:rgba(201,162,78,.5);opacity:.35;transition:opacity .3s;filter:url(#blur)}
 .mark:hover .star,.mark.active .star{transform:scale(1.45);fill:#B8892E}
 .mark:hover .glow,.mark.active .glow{opacity:1}
 .mark.active .glow{animation:glow 2.4s ease-in-out infinite}
 @keyframes glow{0%,100%{opacity:.5}50%{opacity:1}}
 .mark .hit{fill:transparent}
+.mark text,.mark .lead{pointer-events:none}
 .mark .lead{stroke:rgba(31,46,74,.45);stroke-width:.8;fill:none}
 .mark text{font-family:'Josefin Sans',sans-serif;font-size:10.5px;letter-spacing:.18em;fill:var(--navy);paint-order:stroke;stroke:var(--ocean);stroke-width:3.2px;stroke-linejoin:round;transition:fill .25s}
 .mark.onland text{stroke:var(--land)}
@@ -75,7 +76,7 @@ button{font:inherit;color:inherit}
 .feature.fade{opacity:0}
 .feature .ph{flex:0 0 40%;aspect-ratio:4/3;align-self:center;background:#E6ECF1 center/cover no-repeat}
 .feature .txt{flex:1;padding:10px 14px 8px;display:flex;flex-direction:column;min-width:0}
-.feature .country{color:var(--riviera);font-size:10px}
+.feature .country{color:var(--riviera);font-size:10px;display:flex;align-items:center;gap:7px}
 .feature h3{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:clamp(18px,1.7vw,24px);line-height:1.15;color:var(--navy);margin-top:6px}
 .feature .rule{width:30px;height:1px;background:var(--gold);margin:8px 0 6px}
 .feature .mood{font-size:16px;font-style:italic;color:var(--muted);margin-bottom:8px}
@@ -102,7 +103,9 @@ button{font:inherit;color:inherit}
 .card.hidden{display:none}
 .card .ph{aspect-ratio:3/2;background:#E6ECF1 center/cover no-repeat}
 .card .body{padding:18px 16px 14px;display:flex;flex-direction:column;flex:1}
-.card .country{color:var(--riviera)}
+.card .country{color:var(--riviera);display:flex;align-items:center;gap:8px}
+.flag{width:20px;height:auto;flex:0 0 auto;box-shadow:0 0 0 1px rgba(31,46,74,.12)}
+.modal .flag{box-shadow:0 0 0 1px rgba(255,255,255,.4)}
 .card h3{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:25px;line-height:1.18;color:var(--navy);margin:8px 0 8px}
 .card p{font-size:18px;color:#3E4452;flex:1}
 .card .go{margin-top:14px;color:var(--navy);border-bottom:1px solid var(--gold);align-self:flex-start;padding-bottom:4px}
@@ -115,7 +118,7 @@ button{font:inherit;color:inherit}
 .modal .hero{aspect-ratio:16/8;background:#E6ECF1 center/cover no-repeat;position:relative}
 .modal .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(20,30,50,.7),rgba(20,30,50,0) 60%)}
 .modal .hero .ttl{position:absolute;left:28px;right:28px;bottom:20px;color:#fff;z-index:1}
-.modal .hero .ttl .caps{color:#F1E6CC}
+.modal .hero .ttl .caps{color:#F1E6CC;display:flex;align-items:center;gap:8px}
 .modal .hero h3{font-family:'Cormorant Garamond',Georgia,serif;font-weight:500;font-size:clamp(28px,4.4vw,40px);line-height:1.1;margin-top:6px}
 .close{position:absolute;top:12px;right:14px;z-index:2;width:38px;height:38px;border:1px solid rgba(255,255,255,.7);background:rgba(20,30,50,.35);color:#fff;font-size:22px;line-height:1;cursor:pointer}
 .modal-body{padding:26px 28px 30px}
@@ -128,10 +131,10 @@ button{font:inherit;color:inherit}
 .insider .caps{color:#9A7631}
 .insider p{font-style:italic;font-size:19px;margin-top:6px}
 
-footer{text-align:center;padding:40px 16px 46px;color:var(--muted)}
+footer{text-align:center;padding:30px 16px 40px;color:var(--muted)}
 footer .sig{font-family:'Cormorant Garamond',Georgia,serif;font-weight:500;font-size:22px;letter-spacing:.2em;color:var(--navy)}
 footer .caps{display:block;margin-top:8px;color:var(--riviera)}
-footer p{font-size:16px;font-style:italic;max-width:640px;margin:16px auto 0}
+footer p{font-size:13px;font-style:italic;max-width:600px;margin:0 auto}
 
 @media (max-width:760px){
   .topbar{padding:18px 16px 0}
@@ -227,14 +230,13 @@ footer p{font-size:16px;font-style:italic;max-width:640px;margin:16px auto 0}
 </div>
 
 <footer>
-  <div class="sig">YULIA KNOWLES</div>
-  <span class="caps">Executive Personal Assistant</span>
   <p>A portfolio sample. Details reflect public information as of October 2026; access, schedules and policies change, so every element is confirmed with the provider before anything is booked. Photography from Unsplash. Map data from Natural Earth.</p>
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
 <script>
+const FLAG = cc => `<img class="flag" src="https://flagcdn.com/w40/${cc}.png" alt="" width="20">`;
 const IMG = id => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=900&q=70`;
 const TYPES = ["Romance","Family","Adventure","Culture & Gastronomy","Wilderness"];
 const SEASONS = ["Winter","Spring","Summer","Autumn"];
@@ -243,8 +245,8 @@ const EXPERIENCES = [
   {
     title:"A Truffle Lunch, Arriving by Helicopter",
     country:"France", label:["LORGUES","FRANCE"], dx:-58, dy:16, anchor:"end",
-    mood:"Indulgence · Tradition", place:"Lorgues, Provence · France",
-    lat:43.493, lng:6.361, photo:"1600759487717-62bbb608106e",
+    mood:"Indulgence · Tradition", cc:"fr", place:"Lorgues, Provence · France",
+    lat:43.493, lng:6.361, photo:"1770988966484-076405323d37",
     types:["Romance","Culture & Gastronomy"], seasons:["Winter","Spring","Summer","Autumn"],
     summary:"A short helicopter hop from the Riviera to a family-run Provençal farmhouse where nearly every course is built around the truffle.",
     lead:"Chez Bruno holds one Michelin star and serves a single truffle tasting menu that changes with the season. The house is run by two brothers, Benjamin in the kitchen and Samuel in the dining room, continuing their father's tradition.",
@@ -259,7 +261,7 @@ const EXPERIENCES = [
   {
     title:"Glacier Express, Excellence Class",
     country:"Switzerland", label:["ST. MORITZ","SWITZERLAND"], dx:54, dy:-28, anchor:"start", onland:true,
-    mood:"Grandeur · Ease", place:"St. Moritz to Zermatt · Switzerland",
+    mood:"Grandeur · Ease", cc:"ch", place:"St. Moritz to Zermatt · Switzerland",
     lat:46.498, lng:9.838, photo:"1518625081961-b7fa235a38af",
     types:["Romance","Culture & Gastronomy"], seasons:["Winter","Spring","Summer"],
     summary:"Eight hours across the Alps in the most exclusive carriage of the train, from St. Moritz to car-free Zermatt beneath the Matterhorn.",
@@ -275,8 +277,8 @@ const EXPERIENCES = [
   {
     title:"A Private Arctic Estate for the Family",
     country:"Finland", label:["ROVANIEMI","FINLAND"], dx:50, dy:-14, anchor:"start", onland:true,
-    mood:"Wonder · Togetherness", place:"Rovaniemi, Lapland · Finland",
-    lat:66.503, lng:25.729, photo:"1528155124528-06c125d81e89",
+    mood:"Wonder · Togetherness", cc:"fi", place:"Rovaniemi, Lapland · Finland",
+    lat:66.503, lng:25.729, photo:"1514773896690-40d0fd46f143",
     types:["Family","Wilderness"], seasons:["Winter","Autumn"],
     summary:"An exclusive-use wilderness lodge whose exact location is kept private, reached the storybook way: overnight on the Santa Claus Express.",
     lead:"Octola Private Wilderness is available only for exclusive-use stays and has hosted royals and film stars. Private chefs, wilderness guides and reindeer are part of the stay, and Santa Claus Village in Rovaniemi is a short drive away.",
@@ -290,7 +292,7 @@ const EXPERIENCES = [
   {
     title:"Unlocking the Sistine Chapel at Dawn",
     country:"Vatican City", label:["VATICAN","CITY"], dx:50, dy:30, anchor:"start", onland:true,
-    mood:"Awe · Privilege", place:"Vatican City · Rome",
+    mood:"Awe · Privilege", cc:"va", place:"Vatican City · Rome",
     lat:41.906, lng:12.454, photo:"1657566639305-c00caab4022d",
     types:["Culture & Gastronomy"], seasons:["Winter","Spring","Summer","Autumn"],
     summary:"Before the museums open, walk the empty galleries with the Vatican's Key Master as he turns on the lights and opens the Sistine Chapel.",
@@ -306,7 +308,7 @@ const EXPERIENCES = [
   {
     title:"A Highland Castle on the River Spey",
     country:"Scotland", label:["SPEYSIDE","SCOTLAND"], dx:-78, dy:2, anchor:"end",
-    mood:"Heritage · Calm", place:"Speyside · Scotland",
+    mood:"Heritage · Calm", cc:"gb-sct", place:"Speyside · Scotland",
     lat:57.616, lng:-3.099, photo:"1665516870021-4de1bb8e02aa",
     types:["Family","Culture & Gastronomy"], seasons:["Spring","Summer","Autumn"],
     summary:"Take over a fully staffed 15th-century family castle in whisky country, with private salmon beats on one of Scotland's great rivers.",
@@ -321,7 +323,7 @@ const EXPERIENCES = [
   {
     title:"Seven Stars in Kyushu",
     country:"Japan", label:["KYUSHU","JAPAN"], dx:50, dy:-4, anchor:"start",
-    mood:"Artistry · Rarity", place:"Kyushu · Japan",
+    mood:"Artistry · Rarity", cc:"jp", place:"Kyushu · Japan",
     lat:33.590, lng:130.420, photo:"1618415880228-b9fd00c1e555",
     types:["Romance","Culture & Gastronomy"], seasons:["Winter","Spring","Summer","Autumn"],
     summary:"Japan's most coveted train: seven cars, around twenty guests, and a waiting list so long that seats are allocated by lottery.",
@@ -336,7 +338,7 @@ const EXPERIENCES = [
   {
     title:"Emperor Penguins from a Sky Pod",
     country:"Antarctica", label:["QUEEN MAUD LAND","ANTARCTICA"], dx:-30, dy:-44, anchor:"end",
-    mood:"Awe · Solitude", place:"Queen Maud Land · Antarctica",
+    mood:"Awe · Solitude", cc:"aq", place:"Queen Maud Land · Antarctica",
     lat:-71.5, lng:8.5, photo:"1551415923-a2297c7fda79",
     types:["Adventure","Wilderness"], seasons:["Winter","Autumn"],
     summary:"A five-hour private flight from Cape Town to the interior of Antarctica, staying in one of six heated pods inspired by space exploration.",
@@ -351,7 +353,7 @@ const EXPERIENCES = [
   {
     title:"Marlon Brando's Private Atoll",
     country:"French Polynesia", label:["TETIAROA","FRENCH POLYNESIA"], dx:10, dy:-38, anchor:"middle",
-    mood:"Escape · Stillness", place:"Tetiaroa · French Polynesia",
+    mood:"Escape · Stillness", cc:"pf", place:"Tetiaroa · French Polynesia",
     lat:-17.013, lng:-149.560, photo:"1692417045423-48f9ac5a57e8",
     types:["Romance","Family"], seasons:["Spring","Summer","Autumn"],
     summary:"Thirty-five villas, each with its own plunge pool and beach, on the atoll Marlon Brando bought after filming in Tahiti.",
@@ -366,7 +368,7 @@ const EXPERIENCES = [
   {
     title:"An Hour with the Mountain Gorillas",
     country:"Rwanda", label:["VOLCANOES N.P.","RWANDA"], dx:62, dy:18, anchor:"start",
-    mood:"Connection · Humility", place:"Volcanoes National Park · Rwanda",
+    mood:"Connection · Humility", cc:"rw", place:"Volcanoes National Park · Rwanda",
     lat:-1.470, lng:29.530, photo:"1589442690840-1c2c880254ac",
     types:["Adventure","Wilderness"], seasons:["Winter","Summer"],
     summary:"A guided trek into the cloud forest to spend one quiet hour with a habituated gorilla family, then back to a lodge on the edge of the park.",
@@ -382,7 +384,7 @@ const EXPERIENCES = [
   {
     title:"The Hidden Valleys of Bhutan",
     country:"Bhutan", label:["PARO","BHUTAN"], dx:24, dy:-40, anchor:"start", onland:true,
-    mood:"Serenity · Discovery", place:"Paro · Bhutan",
+    mood:"Serenity · Discovery", cc:"bt", place:"Paro · Bhutan",
     lat:27.403, lng:89.425, photo:"1729180253305-23990aee8705",
     types:["Culture & Gastronomy","Wilderness"], seasons:["Spring","Autumn"],
     summary:"A journey between Amankora's lodges across several valleys, with private guides, monasteries and almost no other travelers.",
@@ -397,7 +399,7 @@ const EXPERIENCES = [
   {
     title:"A Staffed Villa on Mustique",
     country:"The Grenadines", label:["MUSTIQUE","GRENADINES"], dx:56, dy:22, anchor:"start",
-    mood:"Privacy · Ease", place:"Mustique · The Grenadines",
+    mood:"Privacy · Ease", cc:"vc", place:"Mustique · The Grenadines",
     lat:12.880, lng:-61.190, photo:"1771945484043-3a17fbf57a4b",
     types:["Romance","Family"], seasons:["Winter","Spring"],
     summary:"A privately owned island of about one hundred villas, chosen for one thing above all: privacy. Close enough to Florida for a long weekend.",
@@ -413,7 +415,7 @@ const EXPERIENCES = [
     title:"A Chalet Alone on a Glacier",
     mood:"Silence · Grandeur",
     country:"Alaska", label:["DENALI","ALASKA"], dx:-4, dy:46, anchor:"middle",
-    place:"Denali National Park · Alaska",
+    cc:"us", place:"Denali National Park · Alaska",
     lat:62.95, lng:-150.75, photo:"1604180989431-aa4e1ab13847",
     types:["Adventure","Wilderness","Romance"], seasons:["Winter"],
     summary:"Five bedrooms on a rocky outcrop above the Ruth Glacier, reached only by helicopter, with Denali rising across the ice.",
@@ -429,8 +431,8 @@ const EXPERIENCES = [
   {
     title:"Beluga Summer at the Top of the World",
     mood:"Wildness · Wonder",
-    country:"Canada", label:["SOMERSET ISLAND","NUNAVUT"], dx:-36, dy:42, anchor:"end", onland:true,
-    place:"Somerset Island, Nunavut · Canada",
+    country:"Canada", label:["SOMERSET ISLAND","NUNAVUT"], dx:40, dy:8, anchor:"start", onland:true,
+    cc:"ca", place:"Somerset Island, Nunavut · Canada",
     lat:74.1, lng:-93.9, photo:"1690150421558-b0e78fde97cf",
     types:["Adventure","Wilderness","Family"], seasons:["Summer"],
     summary:"The most northerly fly-in lodge on earth, on the Northwest Passage beside one of the largest beluga nurseries in the Arctic.",
@@ -446,7 +448,7 @@ const EXPERIENCES = [
     title:"Machu Picchu, from the Only Hotel at Its Gates",
     mood:"Wonder · History",
     country:"Peru", label:["MACHU PICCHU","PERU"], dx:-52, dy:24, anchor:"end",
-    place:"Machu Picchu · Peru",
+    cc:"pe", place:"Machu Picchu · Peru",
     lat:-13.16, lng:-72.54, photo:"1539017691474-d280be4d3290",
     types:["Culture & Gastronomy","Romance"], seasons:["Spring","Summer"],
     summary:"Arrive on the Hiram Bingham train and sleep a three-minute walk from the citadel entrance, after the day visitors have gone.",
@@ -462,7 +464,7 @@ const EXPERIENCES = [
     title:"A Private Guide for Every Villa",
     mood:"Freedom · Wildness",
     country:"Chile", label:["TORRES DEL PAINE","CHILE"], dx:-54, dy:2, anchor:"end",
-    place:"Patagonia · Chile",
+    cc:"cl", place:"Patagonia · Chile",
     lat:-51.0, lng:-72.9, photo:"1510939859912-0e7e5904c400",
     types:["Adventure","Romance","Wilderness"], seasons:["Autumn","Winter","Spring"],
     summary:"Villas on a private reserve facing the granite towers, each with its own guide and 4x4, so no day runs on a group schedule.",
@@ -487,7 +489,8 @@ svg.append("path").datum({type:"Sphere"}).attr("class","sphere").attr("d", path)
 svg.append("path").datum(d3.geoGraticule10()).attr("class","grat").attr("d", path);
 const landLayer = svg.append("g");
 const cardLine = svg.append("polyline").attr("class","cardline");
-const markLayer = svg.append("g");
+const labelLayer = svg.append("g");
+const starLayer = svg.append("g");
 
 d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/land-110m.json").then(topo => {
   landLayer.append("path").datum(topojson.feature(topo, topo.objects.land)).attr("class","land").attr("d", path);
@@ -498,20 +501,23 @@ const STAR = "M0,-8 C0.9,-2.2 2.2,-0.9 8,0 C2.2,0.9 0.9,2.2 0,8 C-0.9,2.2 -2.2,0
 
 const marks = EXPERIENCES.map((e, i) => {
   const [x, y] = proj([e.lng, e.lat]);
-  const g = markLayer.append("g").attr("class", e.onland ? "mark onland" : "mark")
+  const cls = e.onland ? "mark onland" : "mark";
+  const lg = labelLayer.append("g").attr("class", cls);
+  const sgWrap = starLayer.append("g").attr("class", cls)
     .attr("tabindex", 0).attr("role", "button").attr("aria-label", e.title);
   const lx = x + e.dx, ly = y + e.dy;
   const tail = e.anchor === "end" ? lx + 4 : e.anchor === "start" ? lx - 4 : lx;
   const tailY = e.anchor === "middle" ? ly - 18 : ly - 4;
-  g.append("polyline").attr("class","lead").attr("points", `${x},${y} ${tail},${tailY}`);
-  const t = g.append("text").attr("x", lx).attr("y", ly - 8).attr("text-anchor", e.anchor);
+  lg.append("polyline").attr("class","lead").attr("points", `${x},${y} ${tail},${tailY}`);
+  const t = lg.append("text").attr("x", lx).attr("y", ly - 8).attr("text-anchor", e.anchor);
   t.append("tspan").attr("x", lx).attr("dy", 0).text(e.label[0]);
   t.append("tspan").attr("x", lx).attr("dy", 14).text(e.label[1]);
-  const sg = g.append("g").attr("class","sg").attr("transform", `translate(${x},${y})`);
+  const sg = sgWrap.append("g").attr("class","sg").attr("transform", `translate(${x},${y})`);
   sg.append("circle").attr("class","glow").attr("r", 12);
   sg.append("path").attr("class","star").attr("d", STAR);
-  sg.append("circle").attr("class","hit").attr("r", 15);
-  g.on("mouseenter", () => { stopAuto(); feature(i); })
+  sg.append("circle").attr("class","hit").attr("r", 11);
+  const g = d3.selectAll([lg.node(), sgWrap.node()]);
+  sgWrap.on("mouseenter", () => { stopAuto(); feature(i); })
    .on("click", () => { stopAuto(); feature(i); openModal(i); })
    .on("keydown", ev => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); stopAuto(); feature(i); openModal(i); } });
   return {g, sg, x, y};
@@ -535,7 +541,7 @@ function feature(i){
   fEl.classList.add("fade");
   setTimeout(() => {
     document.getElementById("fPh").style.backgroundImage = `url(${IMG(e.photo)})`;
-    document.getElementById("fCountry").textContent = e.country;
+    document.getElementById("fCountry").innerHTML = FLAG(e.cc) + `<span>${e.country}</span>`;
     document.getElementById("fTitle").textContent = e.title;
     document.getElementById("fMood").textContent = e.mood;
     fEl.classList.remove("fade");
@@ -594,7 +600,7 @@ EXPERIENCES.forEach((e, i) => {
   card.innerHTML = `
     <div class="ph" style="background-image:url(${IMG(e.photo)})" role="img" aria-label="${e.country}"></div>
     <div class="body">
-      <div class="caps country">${e.place}</div>
+      <div class="caps country">${FLAG(e.cc)}<span>${e.place}</span></div>
       <h3>${e.title}</h3>
       <p>${e.summary}</p>
       <span class="caps go">View the brief &#8599;</span>
@@ -625,7 +631,7 @@ const overlay = document.getElementById("overlay");
 function openModal(i){
   const e = EXPERIENCES[i];
   document.getElementById("mHero").style.backgroundImage = `url(${IMG(e.photo)})`;
-  document.getElementById("mPlace").textContent = e.place;
+  document.getElementById("mPlace").innerHTML = FLAG(e.cc) + `<span>${e.place}</span>`;
   document.getElementById("mTitle").textContent = e.title;
   document.getElementById("mLead").textContent = e.lead;
   document.getElementById("mFacts").innerHTML = e.facts.map(f => `<div class="fact"><div class="caps">${f[0]}</div><div>${f[1]}</div></div>`).join("");
